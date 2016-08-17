@@ -41,8 +41,6 @@ const refresh = () =>
       // Queue up any new current headings
       collection.enqueue(current.headings);
 
-      console.log(collection.total());
-
       if (collection.length() > length) return;
 
       STATE.cursor = archived.next.cursor;
@@ -50,17 +48,17 @@ const refresh = () =>
       collection.enqueue(archived.headings);
     });
 
-const init = () =>
-  setInterval(() => {
-    const [item, isStale] = collection.dequeue();
+const pop = () => {
+  const [item, isStale] = collection.dequeue();
 
-    render(`
-      <h1>${item.wind}</h1>
-      <h2>${item.value}°</h2>
-    `);
+  render(`
+    <h1>${item.wind}</h1>
+    <h2>${item.value}°</h2>
+  `);
 
-    if (isStale) refresh();
-  }, 2500);
+  if (isStale) refresh();
+};
 
-init();
-refresh();
+export default () =>
+  refresh().then(pop);
+  setInterval(pop, 2500);
