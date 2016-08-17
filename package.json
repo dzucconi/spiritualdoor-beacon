@@ -1,6 +1,6 @@
 {
   "name": "spiritualdoor-beacon",
-  "description": "",
+  "description": "...",
   "author": "Damon Zucconi",
   "version": "0.0.1",
   "repository": {
@@ -12,7 +12,6 @@
     "prod": "brunch build --production"
   },
   "dependencies": {
-    "collections": "^5.0.4",
     "qs": "^6.2.1",
     "whatwg-fetch": "^1.0.0"
   },
