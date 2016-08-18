@@ -1,6 +1,11 @@
 import qs from 'qs';
 import get from './lib/get';
 import Queue from './lib/queue';
+import * as voice from './lib/voice';
+
+const CONFIG = {
+  speed: 5000,
+};
 
 const endpoint = (options = {}) => {
   const query = qs.stringify(Object.assign({
@@ -13,13 +18,15 @@ const endpoint = (options = {}) => {
 const el = document.getElementById('app');
 const render = x => el.innerHTML = x;
 
-const collection = new Queue;
+const collection = new Queue(x => {
+  return [x.value, x.ip].join(':');
+});
 
 const fetch = {
   current: () =>
     get(endpoint({ limit: 5 })),
   next: (cursor =>
-    get(endpoint({ limit: 5, next: cursor }))),
+    get(endpoint({ limit: 50, next: cursor }))),
 };
 
 const ping = cursor => {
@@ -30,6 +37,9 @@ const ping = cursor => {
 
 const STATE = {
   cursor: null,
+  voice: 'Carla',
+  ip: null,
+  voices: {},
 };
 
 const refresh = () =>
@@ -51,14 +61,44 @@ const refresh = () =>
 const pop = () => {
   const [item, isStale] = collection.dequeue();
 
+  // Toggle voice on IP changes
+  if (STATE.ip !== item.ip) {
+    STATE.ip = item.ip;
+    STATE.voice = STATE.voice === 'Carla' ? 'Giorgio' : 'Carla';
+  }
+
   render(`
     <h1>${item.wind}</h1>
-    <h2>${item.value}°</h2>
+
+    <h2>
+      ${item.value}°<br>
+      ${item.ip}<br>
+      ${item.fingerprint}
+    </h2>
+
+    <div
+      class='vane'
+      style='transform: rotate(${item.value}deg);'>
+    </div>
   `);
+
+  STATE.voices[STATE.voice][item.wind].play();
 
   if (isStale) refresh();
 };
 
-export default () =>
-  refresh().then(pop);
-  setInterval(pop, 2500);
+export default () => {
+  STATE.voices = voice.preload();
+
+  refresh()
+    .then(() => {
+      pop();
+      setInterval(pop, CONFIG.speed);
+    });
+};
+
+// TODO:
+// Q: What happens if we reach the limit of the API within queue capacity?
+// A: Gives up nexting and just checks for new entries
+// * Implement capacity
+// ** Manage and delete indexed keys
