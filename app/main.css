@@ -17,5 +17,9 @@ body {
 h1,
 h2 {
   font-weight: normal;
-  animation: fade 2.5s linear;
+  animation: fade 5s linear;
+}
+
+.vane {
+  display: none;
 }
