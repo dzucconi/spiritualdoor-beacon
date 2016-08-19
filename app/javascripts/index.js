@@ -1,4 +1,5 @@
 import qs from 'qs';
+import moment from 'moment';
 import get from './lib/get';
 import Queue from './lib/queue';
 import * as voice from './lib/voice';
@@ -59,33 +60,41 @@ const refresh = () =>
     });
 
 const pop = () => {
-  const [item, isStale] = collection.dequeue();
+  const [heading, isStale] = collection.dequeue();
 
   // Toggle voice on IP changes
-  if (STATE.ip !== item.ip) {
-    STATE.ip = item.ip;
+  if (STATE.ip !== heading.ip) {
+    STATE.ip = heading.ip;
     STATE.voice = STATE.voice === 'Carla' ? 'Giorgio' : 'Carla';
   }
 
   render(`
     <h1 class='wind'>
-      ${item.wind}
+      ${heading.wind}
     </h1>
 
     <div class='metadata'>
       <div class='metadata__value'>
-        ${item.value}°
+        ${heading.value}°
       </div>
+
+      <div class='metadata__created-at'>
+        <time datetime='${heading.created_at}'>
+          ${moment(heading.created_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+        </time>
+      </div>
+
       <div class='metadata__ip'>
-        ${item.ip}
+        ${heading.ip}
       </div>
+
       <div class='metadata__fingerprint'>
-        ${item.fingerprint}
+        ${heading.fingerprint}
       </div>
     </div>
   `);
 
-  STATE.voices[STATE.voice][item.wind].play();
+  STATE.voices[STATE.voice][heading.wind].play();
 
   if (isStale) refresh();
 };
@@ -99,9 +108,3 @@ export default () => {
       setInterval(pop, CONFIG.speed);
     });
 };
-
-// TODO:
-// Q: What happens if we reach the limit of the API within queue capacity?
-// A: Gives up nexting and just checks for new entries
-// * Implement capacity
-// ** Manage and delete indexed keys

@@ -9,34 +9,33 @@
 
 body {
   background-color: black;
-  color: green;
+  color: white;
   margin: 2em;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: 'Work Sans', sans-serif;
-  line-height: 1.25;
-}
-
-.app {
-  /*position: absolute;
-  bottom: 2em;
-  left: 2em;*/
+  font-family: sans-serif;
 }
 
 .wind {
   font-family: serif;
-  color: red;
+  color: white;
+  font-size: 32px;
 }
 
-.wind,
-.metadata {
+.wind {
+  opacity: 0;
   font-weight: normal;
-  animation: fade 5s linear;
+  animation: fade 5s;
+  animation-iteration-count: 1;
 }
 
 .metadata {
-  font-size: 20px;
+  position: absolute;
+  bottom: 2em;
+  font-size: 14px;
+  line-height: 1.5;
 }
   .metadata__ip,
   .metadata__fingerprint {
+    text-transform: uppercase;
   }

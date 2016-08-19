@@ -12,6 +12,7 @@
     "prod": "brunch build --production"
   },
   "dependencies": {
+    "moment": "^2.14.1",
     "qs": "^6.2.1",
     "whatwg-fetch": "^1.0.0"
   },
