@@ -9,17 +9,34 @@
 
 body {
   background-color: black;
-  color: white;
-  font-family: sans-serif;
+  color: green;
   margin: 2em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'Work Sans', sans-serif;
+  line-height: 1.25;
 }
 
-h1,
-h2 {
+.app {
+  /*position: absolute;
+  bottom: 2em;
+  left: 2em;*/
+}
+
+.wind {
+  font-family: serif;
+  color: red;
+}
+
+.wind,
+.metadata {
   font-weight: normal;
   animation: fade 5s linear;
 }
 
-.vane {
-  display: none;
+.metadata {
+  font-size: 20px;
 }
+  .metadata__ip,
+  .metadata__fingerprint {
+  }

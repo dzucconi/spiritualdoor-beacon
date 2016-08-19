@@ -68,17 +68,20 @@ const pop = () => {
   }
 
   render(`
-    <h1>${item.wind}</h1>
+    <h1 class='wind'>
+      ${item.wind}
+    </h1>
 
-    <h2>
-      ${item.value}°<br>
-      ${item.ip}<br>
-      ${item.fingerprint}
-    </h2>
-
-    <div
-      class='vane'
-      style='transform: rotate(${item.value}deg);'>
+    <div class='metadata'>
+      <div class='metadata__value'>
+        ${item.value}°
+      </div>
+      <div class='metadata__ip'>
+        ${item.ip}
+      </div>
+      <div class='metadata__fingerprint'>
+        ${item.fingerprint}
+      </div>
     </div>
   `);
 
