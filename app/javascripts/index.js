@@ -68,6 +68,8 @@ const pop = () => {
     STATE.voice = STATE.voice === 'Carla' ? 'Giorgio' : 'Carla';
   }
 
+  const timestamp = moment(heading.created_at);
+
   render(`
     <h1 class='wind'>
       ${heading.wind}
@@ -75,12 +77,12 @@ const pop = () => {
 
     <div class='metadata'>
       <div class='metadata__value'>
-        ${heading.value}°
+        ${heading.abbreviation} ${heading.value}°
       </div>
 
-      <div class='metadata__created-at'>
+      <div class='metadata__timestamp'>
         <time datetime='${heading.created_at}'>
-          ${moment(heading.created_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+          ${timestamp.format('dddd, MMMM Do YYYY, h')}<span>:</span>${timestamp.format('mm')}<span>:</span>${timestamp.format('ss a')}
         </time>
       </div>
 
