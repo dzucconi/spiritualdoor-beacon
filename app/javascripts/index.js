@@ -38,7 +38,7 @@ const ping = cursor => {
 
 const STATE = {
   cursor: null,
-  voice: 'Carla',
+  voice: 'Giorgio',
   ip: null,
   voices: {},
 };
@@ -65,7 +65,7 @@ const pop = () => {
   // Toggle voice on IP changes
   if (STATE.ip !== heading.ip) {
     STATE.ip = heading.ip;
-    STATE.voice = STATE.voice === 'Carla' ? 'Giorgio' : 'Carla';
+    STATE.voice = STATE.voice === 'Giorgio' ? 'Carla' : 'Giorgio';
   }
 
   const timestamp = moment(heading.created_at);
