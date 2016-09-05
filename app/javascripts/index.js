@@ -1,46 +1,34 @@
-import qs from 'qs';
 import moment from 'moment';
 import get from './lib/get';
+import api from './lib/api';
 import Queue from './lib/queue';
 import * as voice from './lib/voice';
 
-const CONFIG = {
-  speed: 5000,
-};
-
-const endpoint = (options = {}) => {
-  const query = qs.stringify(Object.assign({
-    limit: 5,
-  }, options));
-
-  return `http://api.openpseudonym.org/api/headings?${query}`;
+import CONFIG from './config';
+const STATE = {
+  cursor: null,
+  voice: 'Giorgio',
+  ip: null,
+  voices: {},
 };
 
 const el = document.getElementById('app');
 const render = x => el.innerHTML = x;
 
-const collection = new Queue(x => {
-  return [x.value, x.ip].join(':');
+const collection = new Queue({
+  capacity: CONFIG.capacity,
+  indexBy: x => [x.value, x.ip].join(':'),
 });
 
 const fetch = {
-  current: () =>
-    get(endpoint({ limit: 5 })),
-  next: (cursor =>
-    get(endpoint({ limit: 50, next: cursor }))),
+  current: () => get(api({ limit: 150 })),
+  next: (cursor => get(api({ limit: 150, next: cursor }))),
 };
 
 const ping = cursor => {
   const fetches = [fetch.current()];
   if (cursor) fetches.push(fetch.next(cursor));
   return Promise.all(fetches);
-};
-
-const STATE = {
-  cursor: null,
-  voice: 'Giorgio',
-  ip: null,
-  voices: {},
 };
 
 const refresh = () =>
