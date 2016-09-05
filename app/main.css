@@ -32,7 +32,8 @@ time > span {
   animation-iteration-count: 1;
 }
 
-.metadata {
+.metadata,
+.debug {
   position: absolute;
   bottom: 2em;
   font-size: 14px;
@@ -41,3 +42,8 @@ time > span {
   .metadata__fingerprint {
     text-transform: uppercase;
   }
+
+.debug {
+  right: 2em;
+  text-align: right;
+}

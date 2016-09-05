@@ -94,6 +94,11 @@ const pop = () => {
         ${heading.fingerprint}
       </div>
     </div>
+
+    <div class='debug'>
+      Length: ${collection.length()}<br>
+      Total: ${collection.total()}
+    </div>
   `);
 
   STATE.voices[STATE.voice][heading.wind].play();
