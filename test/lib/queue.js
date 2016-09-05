@@ -1,9 +1,15 @@
 import Queue from '../../app/javascripts/lib/queue';
 
-let collection = null;
+const times = (n, iteratee) => {
+  const accum = Array(Math.max(0, n));
+  for (var i = 0; i < n; i++) accum[i] = iteratee(i);
+  return accum;
+};
 
 describe('Queue', () => {
   describe('with a simple collection', () => {
+    let collection = null;
+
     beforeEach(() => {
       collection = new Queue;
       collection.enqueue([
@@ -58,10 +64,12 @@ describe('Queue', () => {
 
       collection.length().should.equal(5);
     });
+  });
 
+  describe('#indexBy', () => {
     it('indexes using the passed function', () => {
-      const another = new Queue(x => `${x.foo}:${x.bar}`);
-      another.enqueue([
+      const collection = new Queue({ indexBy: x => `${x.foo}:${x.bar}` });
+      collection.enqueue([
         { id: 'x', foo: 'monday', bar: 'january' },
         { id: 'y', foo: 'tuesday', bar: 'january' },
         { id: 'z', foo: 'tuesday', bar: 'february' },
@@ -69,13 +77,37 @@ describe('Queue', () => {
         { id: 'q', foo: 'monday', bar: 'january' }, // dup
       ]);
 
-      another.current.map(({ id }) => id)
+      collection.current.map(({ id }) => id)
         .should.eql([
           'x',
           'y',
           'z',
           'x',
         ]);
+    });
+  });
+
+  describe('#isAtCapacity', () => {
+    it('returns `false` if there is no capacity specified', () => {
+      const collection = new Queue;
+      collection.isAtCapacity().should.be.false();
+    });
+
+    it('returns `true` when the queue has reached capacity', () => {
+      const collection = new Queue({ capacity: 2 });
+      collection.enqueue({ id: 1 });
+      collection.isAtCapacity().should.be.false();
+      collection.enqueue({ id: 2 });
+      collection.isAtCapacity().should.be.true();
+      collection.length().should.equal(2);
+    });
+  });
+
+  describe('#capacity', () => {
+    it('constrains the queue until space is available', () => {
+      const collection = new Queue({ capacity: 10 });
+      collection.enqueue(times(13, n => ({ id: n })));
+      collection.length().should.equal(10);
     });
   });
 });

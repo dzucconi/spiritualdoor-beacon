@@ -1,11 +1,13 @@
 export default class Queue {
-  constructor(indexBy = (x => x.id)) {
+  constructor(options) {
+    options = options || {};
+
     this.index = {};
-    this.indexBy = indexBy;
     this.current = [];
     this.history = [];
     this.cursor = 0;
-    this.capacity = null; // todo
+    this.indexBy = options.indexBy || (x => x.id);
+    this.capacity = options.capacity || null;
   }
 
   enqueue(xs) {
@@ -17,20 +19,29 @@ export default class Queue {
     return this;
   }
 
+  isAtCapacity() {
+    return !!this.capacity && this.length() >= this.capacity;
+  }
+
   add(x) {
+    if (this.isAtCapacity()) return this;
+
     const key = this.indexBy(x);
     if (this.index.hasOwnProperty(key)) return this;
+
     this.index[key] = x;
     this.current.push(x);
+
     return this;
   }
 
-  remove() {
-    // todo
+  remove(x) {
+    // this.index[x]
   }
 
   trim() {
-    // todo
+    this.history.slice(0, this.capacity);
+    return this.history;
   }
 
   length() {
