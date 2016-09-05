@@ -42,7 +42,7 @@ export default class Queue {
   }
 
   dequeue() {
-    let x = this.current.pop();
+    let x = this.current.shift();
 
     if (x !== undefined) {
       this.history.push(x);
