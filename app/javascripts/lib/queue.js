@@ -19,13 +19,14 @@ export default class Queue {
     return this;
   }
 
-  isAtCapacity() {
-    return !!this.capacity && this.length() >= this.capacity;
+  isAtCapacity(xs) {
+    xs = xs || this.current;
+    return !!this.capacity && xs.length >= this.capacity;
   }
 
   add(x) {
     if (this.isAtCapacity()) {
-      this.current.shift();
+      this.dequeue();
       this.add(x);
     }
 
@@ -36,15 +37,6 @@ export default class Queue {
     this.current.push(x);
 
     return this;
-  }
-
-  remove(x) {
-    // this.index[x]
-  }
-
-  trim() {
-    this.history.slice(0, this.capacity);
-    return this.history;
   }
 
   length() {
@@ -59,6 +51,10 @@ export default class Queue {
     let x = this.current.shift();
 
     if (x !== undefined) {
+      if (this.isAtCapacity(this.history)) {
+        this.history.shift();
+        this.cursor--;
+      }
       this.history.push(x);
       this.cursor++;
 
