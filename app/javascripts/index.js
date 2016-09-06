@@ -22,7 +22,7 @@ const collection = new Queue({
 
 const fetch = {
   current: () => get(api({ limit: 150 })),
-  next: (cursor => get(api({ limit: 150, next: cursor }))),
+  next: cursor => get(api({ limit: 150, next: cursor })),
 };
 
 const ping = cursor => {
