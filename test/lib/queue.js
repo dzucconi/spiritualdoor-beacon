@@ -109,5 +109,21 @@ describe('Queue', () => {
       collection.enqueue(times(13, n => ({ id: n })));
       collection.length().should.equal(10);
     });
+
+    it('pushes the oldest items out of the queue', () => {
+      const collection = new Queue({ capacity: 2 });
+
+      collection.enqueue([
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ]);
+
+      collection.length().should.equal(2);
+      collection.dequeue()[0].id.should.equal(2);
+      collection.dequeue()[0].id.should.equal(3);
+      collection.length().should.equal(0);
+      collection.total().should.equal(2);
+    });
   });
 });

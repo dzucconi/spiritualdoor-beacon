@@ -24,7 +24,10 @@ export default class Queue {
   }
 
   add(x) {
-    if (this.isAtCapacity()) return this;
+    if (this.isAtCapacity()) {
+      this.current.shift();
+      this.add(x);
+    }
 
     const key = this.indexBy(x);
     if (this.index.hasOwnProperty(key)) return this;
