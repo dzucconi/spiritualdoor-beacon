@@ -120,10 +120,31 @@ describe('Queue', () => {
       ]);
 
       collection.length().should.equal(2);
+
       collection.dequeue()[0].id.should.equal(2);
       collection.dequeue()[0].id.should.equal(3);
+
       collection.length().should.equal(0);
       collection.total().should.equal(2);
+
+      collection.enqueue([
+        { id: 4 },
+        { id: 5 },
+        { id: 6 },
+      ]);
+
+      collection.dequeue()[0].id.should.equal(5);
+
+      collection.enqueue({ id: 7 });
+      collection.dequeue()[0].id.should.equal(6);
+      collection.dequeue()[0].id.should.equal(7);
+
+      collection.total().should.equal(2);
+
+      collection.dequeue()[0].id.should.equal(6);
+      collection.dequeue()[0].id.should.equal(7);
+      collection.dequeue()[0].id.should.equal(6);
+      collection.dequeue()[0].id.should.equal(7);
     });
   });
 });
