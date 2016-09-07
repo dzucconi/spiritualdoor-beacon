@@ -84,9 +84,7 @@ const pop = () => {
     </div>
 
     <div class='debug'>
-      Cursor: ${collection.cursor}<br>
-      Length: ${collection.length()}<br>
-      Total: ${collection.total()}
+      ${collection.cursor}:${collection.length()}:${collection.total()}
     </div>
   `);
 
