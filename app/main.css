@@ -16,7 +16,7 @@ html {
 body {
   background-color: black;
   color: white;
-  margin: 2em;
+  margin: 33px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: sans-serif;
@@ -45,9 +45,9 @@ time > span {
 .metadata,
 .debug {
   position: absolute;
-  right: 2em;
-  bottom: 2em;
-  left: 2em;
+  right: 33px;
+  bottom: 33px;
+  left: 33px;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -71,20 +71,20 @@ time > span {
   }
 
 .debug {
-  right: 2em;
+  right: 33px;
   text-align: right;
 }
 
-/*
- * Mobile
- */
-
 @media (max-width: 600px) {
   .wind {
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-    padding-top: 1em;
+    top: 33px;
+    left: 33px;
+    right: 33px;
+    text-align: left;
+    /*background-color: red;*/
+    opacity: 1 !important;
+    animation: none;
+    transform: none;
   }
   .metadata__fingerprint {
     display: none;
