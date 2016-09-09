@@ -3,6 +3,7 @@ import get from './lib/get';
 import api from './lib/api';
 import Queue from './lib/queue';
 import * as voice from './lib/voice';
+import truncate from './lib/truncate';
 
 import CONFIG from './config';
 const STATE = {
@@ -80,6 +81,10 @@ const pop = () => {
 
       <div class='metadata__fingerprint'>
         ${heading.fingerprint}
+      </div>
+
+      <div class='metadata__fingerprint-compact'>
+        ${truncate(heading.fingerprint, 7, '')}
       </div>
     </div>
 

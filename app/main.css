@@ -1,3 +1,13 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 @keyframes fade {
   0% { opacity: 1; }
   100% { opacity: 0; }
@@ -35,15 +45,51 @@ time > span {
 .metadata,
 .debug {
   position: absolute;
+  right: 2em;
   bottom: 2em;
+  left: 2em;
   font-size: 14px;
   line-height: 1.5;
 }
-  .metadata__fingerprint {
+  .metadata__fingerprint,
+  .metadata__fingerprint-compact {
     text-transform: uppercase;
+  }
+
+  .metadata__fingerprint {
+    display: block;
+  }
+  .metadata__fingerprint-compact {
+    display: none;
+  }
+
+  .metadata > div {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 .debug {
   right: 2em;
   text-align: right;
+}
+
+/*
+ * Mobile
+ */
+
+@media (max-width: 600px) {
+  .wind {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding-top: 1em;
+  }
+  .metadata__fingerprint {
+    display: none;
+  }
+  .metadata__fingerprint-compact {
+    display: block;
+  }
 }
