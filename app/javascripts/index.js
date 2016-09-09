@@ -26,10 +26,23 @@ const fetch = {
   next: cursor => get(api({ limit: 150, next: cursor })),
 };
 
+let pinging = false;
 const ping = cursor => {
+  if (pinging) {
+    const err = new Error('Waiting for previous request to resolve');
+    return Promise.reject(err);
+  }
+
+  pinging = true;
+
   const fetches = [fetch.current()];
+
   if (cursor) fetches.push(fetch.next(cursor));
-  return Promise.all(fetches);
+
+  return Promise.all(fetches).then(res => {
+    pinging = false;
+    return res;
+  });
 };
 
 const refresh = () =>
@@ -46,7 +59,7 @@ const refresh = () =>
       STATE.cursor = archived.next.cursor;
       // Queue up any archived headings
       collection.enqueue(archived.headings);
-    });
+    }, err => console.warn(err));
 
 const pop = () => {
   const [heading, isStale] = collection.dequeue();
