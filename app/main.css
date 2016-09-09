@@ -81,9 +81,6 @@ time > span {
     left: 33px;
     right: 33px;
     text-align: left;
-    /*background-color: red;*/
-    opacity: 1 !important;
-    animation: none;
     transform: none;
   }
   .metadata__fingerprint {
