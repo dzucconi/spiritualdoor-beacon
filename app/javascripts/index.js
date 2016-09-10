@@ -4,6 +4,7 @@ import api from './lib/api';
 import Queue from './lib/queue';
 import * as voice from './lib/voice';
 import truncate from './lib/truncate';
+import reload from './lib/reload';
 
 import CONFIG from './config';
 const STATE = {
@@ -119,4 +120,6 @@ export default () => {
       pop();
       setInterval(pop, CONFIG.speed);
     });
+
+  reload.bind();
 };
