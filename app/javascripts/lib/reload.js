@@ -1,11 +1,11 @@
-const minutes = 180; // 3 hours
+const hours = 12;
 
 export default {
   bind: () => {
     if (location.search.match('kiosk')) {
       setTimeout(() => {
         return location.reload(true);
-      }, minutes * 60 * 1000);
+      }, hours * 60 * 60 * 1000);
     }
   },
 };
