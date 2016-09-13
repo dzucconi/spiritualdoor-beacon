@@ -22,6 +22,12 @@ body {
   font-family: sans-serif;
 }
 
+a,
+a:visited {
+  color: white;
+  text-decoration: none;
+}
+
 time > span {
   animation: fade 1s infinite cubic-bezier(1.0, 0, 0, 1.0);
 }
@@ -50,6 +56,12 @@ time > span {
   left: 33px;
   font-size: 14px;
   line-height: 1.5;
+}
+.metadata {
+  z-index: 1;
+}
+.debug {
+  pointer-events: none;
 }
   .metadata__fingerprint,
   .metadata__fingerprint-compact {

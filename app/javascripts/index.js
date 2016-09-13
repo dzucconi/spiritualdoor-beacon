@@ -91,11 +91,19 @@ const pop = () => {
       </div>
 
       <div class='metadata__ip'>
-        ${heading.ip}
+        <a
+          href='http://browser.openpseudonym.org/#!/data?ip=${heading.ip}'
+          target='_blank'>
+          ${heading.ip}
+        </a>
       </div>
 
       <div class='metadata__fingerprint'>
-        ${heading.fingerprint}
+        <a
+          href='http://browser.openpseudonym.org/#!/data?fingerprint=${heading.fingerprint}'
+          target='_blank'>
+          ${heading.fingerprint}
+        </a>
       </div>
 
       <div class='metadata__fingerprint-compact'>
