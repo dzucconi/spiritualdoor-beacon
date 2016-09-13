@@ -6,6 +6,7 @@ import Queue from './lib/queue';
 import * as voice from './lib/voice';
 import truncate from './lib/truncate';
 import reload from './lib/reload';
+import schedule from './lib/schedule';
 
 import CONFIG from './config';
 const STATE = {
@@ -111,17 +112,28 @@ const pop = () => {
       </div>
     </div>
 
-    <div class='debug'>
-      ${collection.cursor}:${collection.length()}:${collection.total()}
-    </div>
+    ${STATE.isKiosk ? `
+      <div class='debug'>
+        ${collection.cursor}:${collection.length()}:${collection.total()}
+      </div>
+    ` : ''}
   `);
 
-  STATE.voices[STATE.voice][heading.wind].play();
+  const voice = STATE.voices[STATE.voice][heading.wind];
+
+  if (STATE.isKiosk) schedule.adjustVolume(voice);
+
+  voice.play();
 
   if (isStale) refresh();
 };
 
 export default () => {
+  if (location.search.match('kiosk')) {
+    STATE.isKiosk = true;
+    reload.bind();
+  }
+
   STATE.voices = voice.preload();
 
   const PARAMS = qs.parse(location.search.slice(1));
@@ -131,6 +143,4 @@ export default () => {
       pop();
       setInterval(pop, parseInt(PARAMS.speed || CONFIG.speed));
     });
-
-  reload.bind();
 };
