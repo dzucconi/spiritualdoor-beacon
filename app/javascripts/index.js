@@ -1,3 +1,4 @@
+import qs from 'qs';
 import moment from 'moment';
 import get from './lib/get';
 import api from './lib/api';
@@ -115,10 +116,12 @@ const pop = () => {
 export default () => {
   STATE.voices = voice.preload();
 
+  const PARAMS = qs.parse(location.search.slice(1));
+
   refresh()
     .then(() => {
       pop();
-      setInterval(pop, CONFIG.speed);
+      setInterval(pop, parseInt(PARAMS.speed || CONFIG.speed));
     });
 
   reload.bind();
