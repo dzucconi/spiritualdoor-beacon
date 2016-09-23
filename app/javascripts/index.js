@@ -14,6 +14,7 @@ const STATE = {
   voice: 'Giorgio',
   ip: null,
   voices: {},
+  isMute: false,
 };
 
 const el = document.getElementById('app');
@@ -119,24 +120,30 @@ const pop = () => {
     ` : ''}
   `);
 
-  const voice = STATE.voices[STATE.voice][heading.wind];
+  if (!STATE.isMute) {
+    const voice = STATE.voices[STATE.voice][heading.wind];
 
-  if (STATE.isKiosk) schedule.adjustVolume(voice);
+    if (STATE.isKiosk) schedule.adjustVolume(voice);
 
-  voice.play();
+    voice.play();
+  }
 
   if (isStale) refresh();
 };
 
 export default () => {
+  const PARAMS = qs.parse(location.search.slice(1));
+
+  STATE.isMute = PARAMS.mute === 'true';
+
   if (location.search.match('kiosk')) {
     STATE.isKiosk = true;
     reload.bind();
   }
 
-  STATE.voices = voice.preload();
-
-  const PARAMS = qs.parse(location.search.slice(1));
+  if (!STATE.isMute) {
+    STATE.voices = voice.preload();
+  }
 
   refresh()
     .then(() => {
