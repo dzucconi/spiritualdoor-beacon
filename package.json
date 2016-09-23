@@ -14,7 +14,6 @@
     "deploy": "npm run prod && s3-cli --delete-removed --acl-public --config .s3config sync public/ s3://beacon.openpseudonym.org/"
   },
   "dependencies": {
-    "digest-brunch": "^1.5.1",
     "moment": "^2.14.1",
     "qs": "^6.2.1",
     "whatwg-fetch": "^1.0.0"
@@ -28,6 +27,7 @@
     "brunch": "^2.4.0",
     "clean-css-brunch": "^2.0.0",
     "css-brunch": "^2.0.0",
+    "digest-brunch": "^1.5.1",
     "javascript-brunch": "^2.0.0",
     "mocha": "^3.0.2",
     "postcss-brunch": "^2.0.3",
